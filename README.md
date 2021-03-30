@@ -19,5 +19,3 @@ There are some issues with folding that will skip a players turn during the next
 
 A script is included named "playpoker.sh" that will compile and run the poker game in Java. To run this script, locate the directory installed from Github and type "./playpoker.sh"
 
-
-## GAME EXPLANATION
