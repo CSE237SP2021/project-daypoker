@@ -18,3 +18,6 @@ There are some issues with folding that will skip a players turn during the next
 ##### What commands are needed to compile and run your code from the command line (or better yet, provide a script that people can use to run your program!) #####
 
 A script is included named "playpoker.sh" that will compile and run the poker game in Java. To run this script, locate the directory installed from Github and type "./playpoker.sh"
+
+
+## GAME EXPLANATION
