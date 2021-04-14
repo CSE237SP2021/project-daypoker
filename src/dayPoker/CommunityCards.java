@@ -6,6 +6,9 @@ public class CommunityCards {
 	
 	CommunityCards() {};
 	
+	
+	// PRINT THE TEXT FORM OF THE COMMUNITY CARDS 
+	
 	public void print_community(int cards) {
 		
 		for (int i = 0; i < cards; ++i ) {
@@ -30,9 +33,6 @@ public class CommunityCards {
 			System.out.print(rankstring + suitstring + " ");
 			
 		}
-		
-		
-		
 		
 	}
 

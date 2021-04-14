@@ -1,12 +1,15 @@
 package dayPoker;
 
 public class Player {
+	
+	
+	//PLAYERS NEED A HAND, CHIP STACK, PLAYER NAME, INDICATOR OF THEIR TURN, AND A TRACKER FOR THEIR MONEY IN THE POT
 
 	public Card [] cards = new Card[2];
 	public int  chip_stack;
 	public boolean turn;
 	public String name;
-	int money_in_pot;
+	public int money_in_pot;
 	
 	Player(String player_name) {
 		chip_stack = 100;
@@ -14,6 +17,9 @@ public class Player {
 		name = player_name;
 		money_in_pot = 0;
 	};
+	
+	
+	// PRINTS THE HAND OF THE GIVEN PLAYER
 	
 	public void print_hand() {
 		
