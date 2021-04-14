@@ -25,12 +25,12 @@ public class CommunityCards {
 			else if (rank == 14) rankstring = "A";
 			else rankstring = String.valueOf(rank);
 			
-			if (suit == 1) suitstring = "d";
-			if (suit == 2) suitstring = "h";
-			if (suit == 3) suitstring = "s";
-			if (suit == 4) suitstring = "c";
+			if (suit == 1) suitstring = "Diamond";
+			if (suit == 2) suitstring = "Heart";
+			if (suit == 3) suitstring = "Spade";
+			if (suit == 4) suitstring = "Club";
 			
-			System.out.print(rankstring + suitstring + " ");
+			ShowFigures.GetFigures(suitstring, rankstring);
 			
 		}
 		

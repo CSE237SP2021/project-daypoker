@@ -6,8 +6,9 @@ import java.io.*;
 public class ShowFigures {
 	
 
-	public static void GetFigures(String cardsuit, String cardindex) throws IOException{
+	public static void GetFigures(String cardsuit, String cardindex) {
 		String FilePath = ".\\card_figures\\Figure_" + cardsuit + "_" + cardindex + ".txt";
+		
 
 		try (BufferedReader Figure = new BufferedReader(new FileReader(FilePath))) {
 			String line;
@@ -15,7 +16,11 @@ public class ShowFigures {
 			   System.out.println(line);
 			 }
 		}
+		catch (IOException ie) {
+			ie.printStackTrace();
+		}
 		 	
+		System.out.print("");
 	}
 		
 /*	example

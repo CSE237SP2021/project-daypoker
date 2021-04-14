@@ -44,6 +44,8 @@ public class Game {
 	
 	public CommunityCards table = new CommunityCards();
 	
+	public ShowFigures figure_printer = new ShowFigures();
+	
 	
 	
 	public static void main(String[] args) {
