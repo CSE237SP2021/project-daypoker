@@ -24,6 +24,8 @@ public class Game {
 	
 	boolean fold;
 	
+	boolean turn_order = true;
+	
 	Scanner myObj = new Scanner(System.in);
 	
 	public ArrayList<Player> players_in = new ArrayList<Player>();
@@ -74,7 +76,6 @@ public class Game {
 	public void street_init() {
 		player_toact = true;
 		looped = false;
-		main_pot.inPot = 0;
 		player_one.money_in_pot = 0;
 		player_two.money_in_pot = 0;
 		main_pot.last_action = 1;
@@ -87,6 +88,8 @@ public class Game {
 		while (player_one.chip_stack != 0 && player_two.chip_stack != 0 && counter < times) {
 			
 			++counter;
+			
+			turn_order = !turn_order;
 			
 			if (players_in.size() == 1 && players_in.get(0).equals(player_one)) players_in.add(player_two);
 			if (players_in.size() == 1 && players_in.get(0).equals(player_two)) players_in.add(player_one);
@@ -199,7 +202,14 @@ public class Game {
 		
 		player_one.chip_stack += main_pot.inPot;
 		
+		main_pot.inPot = 0;
+		
 		System.out.println("Player One, you have won the hand! The pot of " + main_pot.inPot + " chips has been pushed your way.");
+		
+		if (turn_order) players_in.remove(player_two);
+		
+		else players_in.remove(player_one);
+		
 	}
 	
 	
@@ -207,7 +217,7 @@ public class Game {
 	
 	public int action() {
 		
-		
+	
 		while (player_toact) {
 			
 			for (int i  = 0; i < players_in.size(); ++i) {
