@@ -9,12 +9,14 @@ public class Deck {
 
 	public Card[] deck;
 	public int next_card;
+	public Card[] community_cards;
 	
 	
 	public Deck() {
 		
 		next_card = 0;
 		deck = new Card[52];
+		community_cards = new Card[5];
 		
 		
 		// FILLS THE DECK WITH CARDS REPRESENTING EACH CARD AND RANK
@@ -68,5 +70,32 @@ public class Deck {
 			
 		}
 	
+	}
+	
+	public void print_community(int cards) {
+		
+		for (int i = 0; i < cards; ++i ) {
+			
+			int rank = community_cards[i].rank;
+			int suit = community_cards[i].suit;
+			
+			String rankstring = "";
+			String suitstring = "";
+			
+			if (rank == 11) rankstring = "J"; 
+			else if (rank == 12) rankstring = "Q"; 
+			else if (rank == 13) rankstring = "K"; 
+			else if (rank == 14) rankstring = "A";
+			else rankstring = String.valueOf(rank);
+			
+			if (suit == 1) suitstring = "Diamond";
+			if (suit == 2) suitstring = "Heart";
+			if (suit == 3) suitstring = "Spade";
+			if (suit == 4) suitstring = "Club";
+			
+			ShowFigures.GetFigures(suitstring, rankstring);
+			
+		}
+		
 	}
 }

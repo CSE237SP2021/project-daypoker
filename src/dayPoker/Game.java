@@ -42,8 +42,6 @@ public class Game {
 	
 	public Pot main_pot = new Pot();
 	
-	public CommunityCards table = new CommunityCards();
-	
 	public ShowFigures figure_printer = new ShowFigures();
 	
 	
@@ -107,7 +105,7 @@ public class Game {
 			if (!fold) turn();
 			
 			if (!fold) river();
-		
+		 
 		}
 		
 	}
@@ -149,10 +147,10 @@ public class Game {
 		
 		System.out.println("Here is the flop.");
 		for (int i = 0; i < 3; ++i) {
-			table.table_cards[i] = maindeck.deal_cards();
+			maindeck.community_cards[i] = maindeck.deal_cards();
 		}
 		
-		table.print_community(3);
+		maindeck.print_community(3);
 		
 		System.out.println("");
 		
@@ -171,10 +169,10 @@ public class Game {
 		street_init();
 		
 		System.out.println("Here is the turn.");
-		table.table_cards[3] = maindeck.deal_cards();
+		maindeck.community_cards[3] = maindeck.deal_cards();
 
 		// SHOW THE TURN CARD
-		table.print_community(4);
+		maindeck.print_community(4);
 		
 		System.out.println("");
 		
@@ -192,9 +190,9 @@ public class Game {
 		street_init();
 		
 		System.out.println("Here is the river.");
-		table.table_cards[4] = maindeck.deal_cards();
+		maindeck.community_cards[4] = maindeck.deal_cards();
 		
-		table.print_community(5);
+		maindeck.print_community(5);
 		
 		System.out.println("");
 		
