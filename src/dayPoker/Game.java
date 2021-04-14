@@ -8,8 +8,8 @@ public class Game {
 	//------------RETURN TYPE CONSTANTS------------------//
 	
 	public static class Constants {
-	    public static int success=0;
-	    public static int fold_success=1;
+	    public static int success = 0;
+	    public static int fold_success = 1;
 	    public static int bet_success = 2;
 	    public static int bet_failure = 3;
 	    public static int raise_success = 4;
@@ -88,30 +88,20 @@ public class Game {
 			
 			++counter;
 			
-		if (players_in.size() == 1 && players_in.get(0).equals(player_one)) players_in.add(player_two);
-		if (players_in.size() == 1 && players_in.get(0).equals(player_two)) players_in.add(player_one);
-		fold = false;
+			if (players_in.size() == 1 && players_in.get(0).equals(player_one)) players_in.add(player_two);
+			if (players_in.size() == 1 && players_in.get(0).equals(player_two)) players_in.add(player_one);
+			fold = false;
 		
-		System.out.println("");
-		System.out.println("A new hand will now begin:");
-		if (!fold) {
-		preflop();
-		}
-		street_init();
-		if (!fold) {
 			System.out.println("");
-			flop();
-		}
-		street_init();
-		if (!fold) {
-			System.out.println("");
-			turn();
-		}
-		street_init();
-		if (!fold) {
-		System.out.println("");
-		river();
-		}
+			System.out.println("A new hand will now begin:");
+			
+			if (!fold) preflop();
+		
+			if (!fold) flop();
+
+			if (!fold) turn();
+			
+			if (!fold) river();
 		
 		}
 		
@@ -121,6 +111,8 @@ public class Game {
 	// ----------PREFLOP BETTING ROUND-------------- //
 	
 	public void preflop() {
+		
+		street_init();
 		
 		// EACH PLAYERS PUTS UP A 1 CHIP ANTE
 		
@@ -139,7 +131,7 @@ public class Game {
 		
 		int result = action();
 		
-		if (result == 3) fold = true;
+		if (result == Constants.fold_success) fold = true;
 
 	}
 	
@@ -147,6 +139,8 @@ public class Game {
 	// ----------FLOP BETTING ROUND-------------- //
 	
 	public void flop() {
+		
+		street_init();
 		
 		System.out.println("Here is the flop.");
 		for (int i = 0; i < 3; ++i) {
@@ -159,7 +153,7 @@ public class Game {
 		
 		int result = action();
 		
-		if (result == 3) fold = true;
+		if (result == Constants.fold_success) fold = true;
 		
 		
 	}
@@ -168,6 +162,8 @@ public class Game {
 	// ----------TURN BETTING ROUND-------------- //
 	
 	public void turn() {
+		
+		street_init();
 		
 		System.out.println("Here is the turn.");
 		table.table_cards[3] = maindeck.deal_cards();
@@ -179,7 +175,7 @@ public class Game {
 		
 		int result = action();
 		
-		if (result == 3) fold = true;
+		if (result == Constants.fold_success) fold = true;
 		
 	}
 	
@@ -187,6 +183,8 @@ public class Game {
 	// ----------RIVER BETTING ROUND-------------- //
 	
 	public void river() {
+		
+		street_init();
 		
 		System.out.println("Here is the river.");
 		table.table_cards[4] = maindeck.deal_cards();
@@ -197,7 +195,7 @@ public class Game {
 		
 		int result = action();
 		
-		if (result == 3) fold = true;
+		if (result == Constants.fold_success) fold = true;
 		
 		player_one.chip_stack += main_pot.inPot;
 		
@@ -208,128 +206,6 @@ public class Game {
 	//-----------DESIGNATION FUNCTION FOR ALL ACITIONS A PLAYER MAY TAKE--------------//
 	
 	public int action() {
-		
-		
-		/*
-		while (player_toact) {
-		
-			for (int i  = 0; i < players_in.size(); ++i) {
-		
-				if (i == main_pot.last_action && looped) {
-					
-					player_toact = false;
-					return 0;
-				}
-			
-				if (i == players_in.size() - 1) looped = true;
-			
-				System.out.println("Hello " + players_in.get(i).name + ", what is your action? (bet x, raise x, call, check, fold, see hand)");
-			 
-				
-				
-				while (true) {
-			
-					String action = myObj.nextLine();
-		
-					// FOLD
-		 
-					if (action.equals("fold")) {
-			 
-						players_in.remove(i);
-			 
-						if (players_in.size() == 1 && i == 0) {
-							System.out.println("Player 2" + ", you have won! " + main_pot.inPot + " chips have been added to your stack.");
-							Player winner = player_two;
-							winner.chip_stack += main_pot.inPot;
-							return 3;
-						}
-						
-						if (players_in.size() == 1 && i == 1) {
-							System.out.println("Player 1" + ", you have won! " + main_pot.inPot + " chips have been added to your stack.");
-							Player winner = player_one;
-							winner.chip_stack += main_pot.inPot;
-							return 3;
-						}
-						break;
-					}
-		 
-					// SEE HAND
-		 
-					else if (action.equals("see hand")) {
-						players_in.get(i).print_hand();
-					}
-		 
-					// CHECK 
-					else if (action.equals("check")) {
-						if (main_pot.outstanding_bet == 0 && i == 1) return 0;
-						break;
-					}
-		 
-		 
-					// BET
-		 
-					else if (action.toLowerCase().indexOf("bet") != -1) {
-						String bet_size_s = action.split(" ")[1];
-						int bet_size = Integer.parseInt(bet_size_s);
-			 
-						System.out.println(players_in.get(i).chip_stack);
-			 
-						if (bet_size <= players_in.get(i).chip_stack) {
-							main_pot.inPot += bet_size;
-							players_in.get(i).chip_stack -= bet_size;
-							players_in.get(i).money_in_pot = bet_size;
-							main_pot.outstanding_bet = bet_size;
-							main_pot.last_action = i;
-							System.out.println("You bet " + bet_size + " chips.");
-							System.out.println("There are " + main_pot.inPot + " chips in the pot.");
-							break;
-						}
-			
-						else System.out.println("You do not have enough chips to bet that amount.");
-			 
-					}
-		 
-					// CALL
-		 
-					else if (action.equals("call")) {
-						if (main_pot.outstanding_bet == 0) System.out.println("There is no outstanding bet to call.");
-						main_pot.inPot += main_pot.outstanding_bet - players_in.get(i).money_in_pot;
-						players_in.get(i).chip_stack -= main_pot.outstanding_bet - players_in.get(i).money_in_pot;
-						System.out.println("There are " + main_pot.inPot + " chips in the pot.");
-						break;
-					}
-		 
-					// RAISE
-		 
-					else if (action.toLowerCase().indexOf("raise") != -1) {
-						String raise_size_s = action.split(" ")[1];
-						int raise_size = Integer.parseInt(raise_size_s);
-						if (raise_size <= players_in.get(i).chip_stack) {
-							if (main_pot.outstanding_bet > 0 && raise_size >= main_pot.outstanding_bet * 2) {
-								main_pot.inPot += raise_size;
-								players_in.get(i).chip_stack -= raise_size;
-								main_pot.outstanding_bet = raise_size;
-								main_pot.last_action = i;
-								System.out.println("You raised to " + raise_size + " chips.");
-								System.out.println("There are " + main_pot.inPot + " chips in the pot.");
-								break;
-							}
-							else System.out.println("You cannot raise in this instance.");
-				 
-						}
-						else System.out.println("You do not have enough chips to raise this amount.");
-			 
-			 
-					}
-		 
-				}
-			}
-	}
-
-		return 0;
-		
-		
-		*/
 		
 		
 		while (player_toact) {
@@ -396,13 +272,13 @@ public class Game {
 						if (raise_return == Constants.raise_success) break;
 					}
 		 
-			}
+			   }
 		}
 		
 		
 	}
 	
-		return 0;
+		return Constants.success;
 		
 	}
 	
