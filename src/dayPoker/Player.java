@@ -1,12 +1,15 @@
 package dayPoker;
 
 public class Player {
+	
+	
+	//PLAYERS NEED A HAND, CHIP STACK, PLAYER NAME, INDICATOR OF THEIR TURN, AND A TRACKER FOR THEIR MONEY IN THE POT
 
 	public Card [] cards = new Card[2];
 	public int  chip_stack;
 	public boolean turn;
 	public String name;
-	int money_in_pot;
+	public int money_in_pot;
 	
 	Player(String player_name) {
 		chip_stack = 100;
@@ -14,6 +17,9 @@ public class Player {
 		name = player_name;
 		money_in_pot = 0;
 	};
+	
+	
+	// PRINTS THE HAND OF THE GIVEN PLAYER
 	
 	public void print_hand() {
 		
@@ -25,18 +31,18 @@ public class Player {
 			String rankstring = "";
 			String suitstring = "";
 			
-			if (rank == 11) rankstring = "Jack"; 
-			else if (rank == 12) rankstring = "Queen"; 
-			else if (rank == 13) rankstring = "King"; 
-			else if (rank == 14) rankstring = "Ace";
+			if (rank == 11) rankstring = "J"; 
+			else if (rank == 12) rankstring = "Q"; 
+			else if (rank == 13) rankstring = "K"; 
+			else if (rank == 14) rankstring = "A";
 			else rankstring = String.valueOf(rank);
 			
-			if (suit == 1) suitstring = "Diamonds";
-			if (suit == 2) suitstring = "Hearts";
-			if (suit == 3) suitstring = "Spades";
-			if (suit == 4) suitstring = "Clubs";
+			if (suit == 1) suitstring = "Diamond";
+			if (suit == 2) suitstring = "Heart";
+			if (suit == 3) suitstring = "Spade";
+			if (suit == 4) suitstring = "Club";
 			
-			System.out.println("You have the " + rankstring + " of " + suitstring + ".");
+			ShowFigures.GetFigures(suitstring, rankstring);
 			
 		}
 		
