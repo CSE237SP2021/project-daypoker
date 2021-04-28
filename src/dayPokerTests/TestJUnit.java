@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import dayPoker.Card;
@@ -17,30 +19,10 @@ import dayPoker.ShowFigures;
 
 class TestJUnit {
 	
-//	boolean player_toact;
-//	
-//	boolean looped;
-//	
-//	boolean fold;
-//
-//	public Deck maindeck = new Deck();
-
-//	
-//	public Player player_one = new Player("Player 1");
-//	
-//	public Player player_two = new Player("Player 2");
-//	
-//	public Pot main_pot = new Pot();
-//	
-//	public CommunityCards table = new CommunityCards();
-//	
-//	 Scanner myObj = new Scanner(System.in);
-//	 
-//	 public ArrayList<Player> players_in = new ArrayList<Player>();
 	 
 	
 	@Test
-	void test_initial_fold() {
+	void test_z_initial_fold() {
 		
 		// INPUTS: "fold"
 		
@@ -54,7 +36,7 @@ class TestJUnit {
 	}
 	
 	@Test
-	void test_bet_raise_call() {
+	void test_z_bet_raise_call() {
 		
 		// INPUTS: "bet 10, raise 30, call"
 		
@@ -69,7 +51,7 @@ class TestJUnit {
 	
 	
 	@Test
-	void test_bet_raise_fold() {
+	void test_z_bet_raise_fold() {
 		
 		// INPUTS: "bet 10, raise 30, fold"
 		
@@ -83,7 +65,7 @@ class TestJUnit {
 	}
 	
 	@Test
-	void test_check_check() {
+	void test_z_check_check() {
 		
 		// INPUTS: "check, check "
 		
@@ -158,7 +140,6 @@ class TestJUnit {
 
 		assertEquals(3, result);
 	}
-	
 	
 	@Test
 	void test_trips() {
@@ -319,7 +300,7 @@ class TestJUnit {
 		assertEquals(6, result);
 	}
 	
-	
+
 	@Test
 	void test_full_house() {
 		
@@ -651,7 +632,7 @@ class TestJUnit {
 	}
 	
 	@Test
-	void test__better_quads() {
+	void test_better_quads() {
 		
 		Game game = new Game();
 		
@@ -727,6 +708,7 @@ class TestJUnit {
 
 		assertEquals(2, result);
 	}
+	
 	
 	
 }

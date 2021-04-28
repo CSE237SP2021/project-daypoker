@@ -52,16 +52,16 @@ public class Game {
 	
 	public ShowFigures figure_printer = new ShowFigures();
 	
-	public HandEval eval_factory = new HandEval(maindeck);
+	public HandEval eval_factory = new HandEval();
 	
 	
 	
 	public static void main(String[] args) {
 	
 		
-	   Game game = new Game();
+	    Game game = new Game();
 	    
-	   game.print_intro();
+	    game.print_intro();
 	    
 	    game.game_init();
 	    
@@ -77,6 +77,9 @@ public class Game {
 		
 		int width = 150;
 		int height = 24;
+		
+		//IMPLEMENTATION BASED ON https://www.baeldung.com/ascii-art-in-java
+		//AND https://www.youtube.com/watch?v=B5dN9-9bEeg
 		
 		BufferedImage bufferedImage = new BufferedImage(
 				  width, height, 
@@ -107,6 +110,8 @@ public class Game {
 		
 		System.out.println();
 		System.out.println();
+		
+		//TAKE USER INPUT FOR HOW MANY HANDS ARE PLAYED AND STORE IT
 		
 		System.out.println("Welcome to dayPoker. How many hands of Texas Hold'em would you like to play?");
 		
@@ -165,7 +170,7 @@ public class Game {
 		
 	}
 	
-	public void street_init() {
+	private void street_init() {
 		player_toact = true;
 		looped = false;
 		player_one.money_in_pot = 0;
@@ -233,7 +238,7 @@ public class Game {
 	
 	// ----------FLOP BETTING ROUND-------------- //
 	
-	public void flop() {
+	private void flop() {
 		
 		street_init();
 		
@@ -256,7 +261,7 @@ public class Game {
 	
 	// ----------TURN BETTING ROUND-------------- //
 	
-	public void turn() {
+	private void turn() {
 		
 		street_init();
 		
@@ -277,7 +282,7 @@ public class Game {
 	
 	// ----------RIVER BETTING ROUND-------------- //
 	
-	public void river() {
+	private void river() {
 		
 		street_init();
 		
@@ -300,7 +305,7 @@ public class Game {
 		
 	}
 	
-	public void manage_win() {
+	private void manage_win() {
 		
 		System.out.println();
 		
@@ -317,11 +322,15 @@ public class Game {
 		
 		int winner = eval_factory.compare_hands(player_one.cards, player_two.cards, maindeck.community_cards);
 		
+		//PLAYER ONE WINS
+		
 		if (winner == 1) {
 			System.out.println("Player One, you had the better hand! The pot of " + main_pot.inPot + " chips has been pushed your way.");
 			player_one.chip_stack += main_pot.inPot;
 			main_pot.inPot = 0;
 		}
+		
+		//PLAYER TWO WINS
 		
 		if (winner == 2) {
 			System.out.println("Player Two, you had the better hand! The pot of " + main_pot.inPot + " chips has been pushed your way.");
@@ -343,7 +352,7 @@ public class Game {
 	
 	//-----------DESIGNATION FUNCTION FOR ALL ACITIONS A PLAYER MAY TAKE--------------//
 	
-	public int action() {
+	private int action() {
 		
 	
 		while (player_toact) {
@@ -388,6 +397,11 @@ public class Game {
 		 
 					// BET
 					
+					else if (action.equals("all in")) {
+						int bet_return = bet(i,action);
+						if (bet_return == Constants.bet_success) break;
+					}
+					
 					else if (action.toLowerCase().indexOf("bet") != -1) {
 						int bet_return = bet(i, action);
 						if (bet_return == Constants.bet_success) break;
@@ -423,7 +437,7 @@ public class Game {
 	
 	//-----------ACTION "FOLD" DECLARED---------------//
 	
-	public int fold (int player_index) {
+	private int fold (int player_index) {
 		
 		 players_in.remove(player_index);
 		 
@@ -445,12 +459,20 @@ public class Game {
 	
 	//-----------ACTION "BET X" DECLARED---------------//
 	
-	public int bet (int player_index, String action) {
+	private int bet (int player_index, String action) {
 		
-		String bet_size_s = action.split(" ")[1];
+		int bet_size = 0;
 		
-		int bet_size = Integer.parseInt(bet_size_s);
-			 
+		if (action.equals("all in")) {
+			bet_size = players_in.get(player_index).chip_stack;
+		}
+		
+		else {
+			String bet_size_s = action.split(" ")[1];
+			
+			bet_size = Integer.parseInt(bet_size_s);
+		}
+		
 			 System.out.println(players_in.get(player_index).chip_stack);
 			 
 			 if (bet_size <= players_in.get(player_index).chip_stack) {
@@ -479,7 +501,7 @@ public class Game {
 	
 	//-----------ACTION "RAISE X" DECLARED---------------//
 	
-	public int raise (int player_index, String action) {
+	private int raise (int player_index, String action) {
 			
 		String raise_size_s = action.split(" ")[1];
 			 

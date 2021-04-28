@@ -7,6 +7,8 @@ import java.util.LinkedHashSet;
 
 public class HandEval {
 	
+	//EVAL RETURN TYPES
+	
 	public static class Eval_Constants {
 	    public static int royal_flush = 10;
 	    public static int straight_flush = 9;
@@ -18,13 +20,15 @@ public class HandEval {
 	    public static int two_pair = 3;
 	    public static int one_pair = 2;
 	    public static int high_card = 1;
+	    public static int failure = 0;
 	    
 	}
 	
 	
 	private Card [] first_hand = new Card[7];
-	
 	private Card [] second_hand = new Card[7];
+	
+	//EVALUATION HELPER ARRAYLISTS
 	
 	private ArrayList<Integer> diamond_helper = new ArrayList<Integer>();
 	private ArrayList<Integer> heart_helper = new ArrayList<Integer>();
@@ -36,15 +40,14 @@ public class HandEval {
 	int first_playervar = 0;
 	int second_playervar = 0;
 	
-	private Deck community_deck;
-	
 	// Constructor
-    HandEval(Deck deck)
+    HandEval()
     {
-    	community_deck = deck;
     }
 
     public Card[] prep_hand(Card[] hand, Card[] community_cards) {
+    	
+    	//CREATE HAND BASED ON HAND AND COMMUNITY CARDS
     	
     	Card [] only_hand = new Card[7];
     	
@@ -71,6 +74,8 @@ public class HandEval {
     	Arrays.sort(first_hand);
     	Arrays.sort(second_hand);
     	
+    	//PASS BOTH HANDS TO CHAIN OF EVAL AND GET RETURN VALUES
+    	
     	int first_result = eval_chain(first_hand);
     	
     	first_playervar = distinguish_var;
@@ -86,6 +91,8 @@ public class HandEval {
     	if (first_result > second_result) return 1;
     	
     	else if (second_result > first_result) return 2;
+    	
+    	//GO TO OUR OTHER HEURISTIC TO DETERMINE WINNER
     	
     	else {
     		if (first_playervar > second_playervar) return 1;
@@ -106,6 +113,8 @@ public class HandEval {
     }
     
     public int eval_chain(Card[] player_hand) {
+    	
+    	//RUN DOWN ALL HAND VALUES FROM MOST VALUABLE TO LEAST VALUABLE
  
     	int result = 0;
     	
@@ -131,8 +140,6 @@ public class HandEval {
     	
     	if (result == 0) result = pairs(player_hand);
     	
-    	
-    	
     	return result;
     	
     }
@@ -142,6 +149,8 @@ public class HandEval {
     	ArrayList<Integer> list_name = new ArrayList<>();
     	
     	int flush_result = flush(player_hand);
+    	
+    	//MAKE SURE A FLUSH EXISTS
     	
     	if (flush_result == Eval_Constants.flush) {
     		if (heart_helper.size() >= 5) {
@@ -159,6 +168,8 @@ public class HandEval {
     		else return 0;
     	}
     	
+    	//MAKE SURE EXISTING FLUSH IS ROYAL
+    	
     	if (list_name.contains(10) && list_name.contains(11) 
     		&& list_name.contains(12) && list_name.contains(13) 
     		&& list_name.contains(14)) return Eval_Constants.royal_flush;
@@ -172,6 +183,8 @@ public class HandEval {
     	ArrayList<Integer> list_name = new ArrayList<>();
     	
     	int flush_result = flush(player_hand);
+    	
+    	//MAKE SURE A FLUSH EXISTS
     	
     	if (flush_result == Eval_Constants.flush) {
     		if (heart_helper.size() >= 5) {
@@ -189,6 +202,8 @@ public class HandEval {
     		else return 0;
     	}
     	else return 0;
+
+    	//CONVERT ARRAY LIST BACK TO A HAND AND CHECK FOR STRAIGHT
     	
     	Card [] straight_hand = new Card[list_name.size()];
     	
@@ -212,6 +227,8 @@ public class HandEval {
     	
     	int quad_counter = 0;
     	
+    	//CHECK ALL RANKS FOR WHAT RANK OF QUADS WE MAY HAVE
+    	
     	for (int test_rank = 0; test_rank <= 14; ++ test_rank) {
     		
     		quad_counter = 0;
@@ -232,7 +249,7 @@ public class HandEval {
     		
     	}
     	
-    	return 0;
+    	return Eval_Constants.failure;
 	
     }
     
@@ -253,10 +270,15 @@ public class HandEval {
     				
     				++fh_counter;
     				
+    				//MAKE SURE WE HAVE ENOUGH FOR 3 OF A KIND
+    				
     				if (fh_counter == 3) {
     					++fh_three;
     					distinguish_var = test_rank;
     				}
+    				
+    				//MAKE SURE WE HHAVE ENOUGH FOR 2 OF A KIND
+    				
     				if (fh_counter == 2) {
     					++fh_two;
     				}
@@ -268,11 +290,13 @@ public class HandEval {
     		return Eval_Constants.full_house;
     	}
     	
-    	return 0;
+    	return Eval_Constants.failure;
     	
     }
     
     private int flush(Card[] player_hand) {
+    	
+    	//ADD ALL CARDS TO RESPECTIVE HOLDER AND DETERMINE FLUSH BASED ON SIZE
     	
     	for (int card = 0; card < player_hand.length; ++ card) {
     		if (player_hand[card].suit == 1) diamond_helper.add(player_hand[card].rank);
@@ -299,7 +323,7 @@ public class HandEval {
     		return Eval_Constants.flush;
     	}
     	
-    	return 0;
+    	return Eval_Constants.failure;
     	
     }
     
@@ -317,10 +341,14 @@ public class HandEval {
     		return Eval_Constants.straight;
     	}
     	
+    	//LOW STRAIGHT
+    	
     	if (cards_nodupes.contains(14) && cards_nodupes.contains(10) && cards_nodupes.contains(11) && cards_nodupes.contains(12) &&  cards_nodupes.contains(13)) {
     		distinguish_var = 14;
     		return Eval_Constants.straight;
     	}
+    	
+    	//GENERAL STRAIGHTS FROM INDEX 2 - 7
     	
     	if (cards_nodupes.size() == 7 ) {
     		
@@ -342,6 +370,8 @@ public class HandEval {
     		
     	}
     	
+    	//GENERAL STRAIGHTS FROM INDEX 1 - 6
+    	
     	if (cards_nodupes.size() >= 6 ) {
     		
     		int test_rank = cards_nodupes.get(1) + 1;
@@ -361,6 +391,8 @@ public class HandEval {
     		}
     		
     	}
+    	
+    	//GENERAL STRAIGHTS FROM INDEX 0 - 5
     	
     	if (cards_nodupes.size() >= 5) {
     		
@@ -383,7 +415,7 @@ public class HandEval {
     		
     	}
     	
-    	return 0;
+    	return Eval_Constants.failure;
  	
     }
     
@@ -394,6 +426,8 @@ public class HandEval {
     	for (int test_rank = 0; test_rank <= 14; ++ test_rank) {
     		
     		trips_counter = 0;
+    		
+    		// MAKE SURE ENOUGH WE HAVE ENOUGH FOR THREE OF A KIND
 
     		for (int card = 0; card < player_hand.length; ++card) {
     		
@@ -440,9 +474,15 @@ public class HandEval {
     		
     	}
     	
+    	//WE HAVE TWO PAIR
+    	
     	if (two_p > 1) return Eval_Constants.two_pair;
     	
+    	//WE HAVE ONE PAIR
+    	
     	if (two_p == 1) return Eval_Constants.one_pair;
+    	
+    	//WE'VE HIT NOTHING SO FAR, SO WE HAVE HIGH CARD
     	
     	return Eval_Constants.high_card;
  

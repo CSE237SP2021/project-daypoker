@@ -72,6 +72,8 @@ public class Deck {
 	
 	}
 	
+	//PRINT COMMUNITY CARDS
+	
 	public void print_community(int cards) {
 		
 		for (int i = 0; i < cards; ++i ) {
