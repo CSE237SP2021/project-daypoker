@@ -1,5 +1,10 @@
 package dayPoker;
-import java.util.Scanner; 
+import java.util.Scanner;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.RenderingHints;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -54,15 +59,57 @@ public class Game {
 		
 		
 	    
-	    Game game = new Game();
+	   Game game = new Game();
 	    
-	    game.hand_test();
+	   game.print_intro();
 	    
-	    game.game_init();
+	   // game.hand_test();
+	    
+	  //  game.game_init();
 	    
 	  //  game.game_loop(100);
 	   
 	    
+	}
+	
+	public void print_intro() {
+		
+		System.out.println();
+		System.out.println();
+		
+		int width = 150;
+		int height = 24;
+		
+		BufferedImage bufferedImage = new BufferedImage(
+				  width, height, 
+				  BufferedImage.TYPE_INT_RGB);
+		
+		Graphics graphics = bufferedImage.getGraphics();
+		
+		 graphics.setFont(new Font("SansSerif", Font.BOLD, 24));
+		
+		Graphics2D graphics2D = (Graphics2D) graphics;
+		graphics2D.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, 
+		  RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+		graphics2D.drawString("DAYPOKER", 10, 20);
+		
+		for (int y = 0; y < height; y++) {
+		    StringBuilder stringBuilder = new StringBuilder();
+
+		    for (int x = 0; x < width; x++) {
+		        stringBuilder.append(bufferedImage.getRGB(x, y) == -16777216 ? "*" : " ");
+		    }
+
+		    if (stringBuilder.toString().trim().isEmpty()) {
+		        continue;
+		    }
+
+		    System.out.println(stringBuilder);
+		}
+		
+		System.out.println();
+		System.out.println();
+			
 	}
 	
 	
