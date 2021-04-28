@@ -10,6 +10,7 @@ import java.util.Scanner;
 import org.junit.jupiter.api.Test;
 
 import dayPoker.Game;
+import dayPoker.ShowFigures;
 
 class TestJUnit {
 	
@@ -91,5 +92,27 @@ class TestJUnit {
 		assertEquals(2, game.main_pot.inPot);
 	}
 
+	@Test
+    void nonfacecard_print() {
 
+        // INPUTS: "10 , Hearts"
+
+        ShowFigures.GetFigures("Heart", "10");
+
+        // Asserting no error is thrown/visual confirmation
+
+        assertEquals(true,true);
+    }
+
+    @Test
+    void facecard_print() {
+
+        // INPUTS: "Jack , Spades"
+
+        ShowFigures.GetFigures("Spade", "J");
+
+        // Asserting no error is thrown/visual confirmation
+
+        assertEquals(true,true);
+    }
 }
