@@ -131,8 +131,6 @@ public class HandEval {
     	
     	if (result == 0) result = pairs(player_hand);
     	
-    	System.out.println("result" + result);
-    	
     	
     	
     	return result;
@@ -168,6 +166,7 @@ public class HandEval {
     	return 0;
     	
     }
+    
     private int straight_flush(Card[] player_hand) {
     	
     	ArrayList<Integer> list_name = new ArrayList<>();
@@ -208,6 +207,7 @@ public class HandEval {
     	
     	
     }
+    
     private int quads(Card[] player_hand) {
     	
     	int quad_counter = 0;
@@ -235,6 +235,7 @@ public class HandEval {
     	return 0;
 	
     }
+    
     private int full_house(Card[] player_hand) {
     	
     	int fh_counter = 0;
@@ -270,6 +271,7 @@ public class HandEval {
     	return 0;
     	
     }
+    
     private int flush(Card[] player_hand) {
     	
     	for (int card = 0; card < player_hand.length; ++ card) {
@@ -384,6 +386,7 @@ public class HandEval {
     	return 0;
  	
     }
+    
     private int three_oak(Card[] player_hand) {
     	
     	int trips_counter = 0;
@@ -411,6 +414,7 @@ public class HandEval {
     	return 0;
      	
     }
+    
     private int pairs(Card[] player_hand) {
      	
     	int pair_counter = 0;
@@ -441,8 +445,6 @@ public class HandEval {
     	if (two_p == 1) return Eval_Constants.one_pair;
     	
     	return Eval_Constants.high_card;
-     	
-  
  
 }
     

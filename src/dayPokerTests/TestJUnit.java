@@ -532,4 +532,201 @@ class TestJUnit {
 
 		assertEquals(2, result);
 	}
+	
+	@Test
+	void test_better_straight() {
+		
+		Game game = new Game();
+		
+		Card [] hand_one = new Card[2];
+		Card [] hand_two = new Card[2];
+		Card [] comm_cards = new Card[5];
+		
+		Card card_one = new Card(4,1);
+		Card card_two = new Card(5,2);
+		
+		hand_one[0] = card_one;
+		hand_one[1] = card_two;
+
+		card_one = new Card(9,1);
+		card_two = new Card(10,2);
+		
+		hand_two[0] = card_one;
+		hand_two[1] = card_two;
+		
+		Card card_three = new Card(6,3);
+		Card card_four = new Card(7,3);
+		Card card_five = new Card(8,1);
+		Card card_six = new Card(12,2);
+		Card card_seven = new Card(14,3);
+		
+		comm_cards[0] = card_three;
+		comm_cards[1] = card_four;
+		comm_cards[2] = card_five;
+		comm_cards[3] = card_six;
+		comm_cards[4] = card_seven;
+		
+		
+		int result = game.eval_factory.compare_hands(hand_one, hand_two, comm_cards);
+
+		assertEquals(2, result);
+	}
+	
+	@Test
+	void test_better_flush() {
+		
+		Game game = new Game();
+		
+		Card [] hand_one = new Card[2];
+		Card [] hand_two = new Card[2];
+		Card [] comm_cards = new Card[5];
+		
+		Card card_one = new Card(8,2);
+		Card card_two = new Card(7,2);
+		
+		hand_one[0] = card_one;
+		hand_one[1] = card_two;
+
+		card_one = new Card(9,2);
+		card_two = new Card(10,2);
+		
+		hand_two[0] = card_one;
+		hand_two[1] = card_two;
+		
+		Card card_three = new Card(2,2);
+		Card card_four = new Card(4,2);
+		Card card_five = new Card(6,2);
+		Card card_six = new Card(12,4);
+		Card card_seven = new Card(14,4);
+		
+		comm_cards[0] = card_three;
+		comm_cards[1] = card_four;
+		comm_cards[2] = card_five;
+		comm_cards[3] = card_six;
+		comm_cards[4] = card_seven;
+		
+		
+		int result = game.eval_factory.compare_hands(hand_one, hand_two, comm_cards);
+
+		assertEquals(2, result);
+	}
+	
+	@Test
+	void test_better_full_house() {
+		
+		Game game = new Game();
+		
+		Card [] hand_one = new Card[2];
+		Card [] hand_two = new Card[2];
+		Card [] comm_cards = new Card[5];
+		
+		Card card_one = new Card(8,4);
+		Card card_two = new Card(5,2);
+		
+		hand_one[0] = card_one;
+		hand_one[1] = card_two;
+
+		card_one = new Card(12,4);
+		card_two = new Card(5,1);
+		
+		hand_two[0] = card_one;
+		hand_two[1] = card_two;
+		
+		Card card_three = new Card(5,3);
+		Card card_four = new Card(12,1);
+		Card card_five = new Card(12,2);
+		Card card_six = new Card(8,1);
+		Card card_seven = new Card(8,2);
+		
+		comm_cards[0] = card_three;
+		comm_cards[1] = card_four;
+		comm_cards[2] = card_five;
+		comm_cards[3] = card_six;
+		comm_cards[4] = card_seven;
+		
+		
+		int result = game.eval_factory.compare_hands(hand_one, hand_two, comm_cards);
+
+		assertEquals(2, result);
+	}
+	
+	@Test
+	void test__better_quads() {
+		
+		Game game = new Game();
+		
+		Card [] hand_one = new Card[2];
+		Card [] hand_two = new Card[2];
+		Card [] comm_cards = new Card[5];
+		
+		Card card_one = new Card(5,1);
+		Card card_two = new Card(5,2);
+		
+		hand_one[0] = card_one;
+		hand_one[1] = card_two;
+
+		card_one = new Card(12,1);
+		card_two = new Card(12,2);
+		
+		hand_two[0] = card_one;
+		hand_two[1] = card_two;
+		
+		Card card_three = new Card(5,3);
+		Card card_four = new Card(5,4);
+		Card card_five = new Card(12,3);
+		Card card_six = new Card(12,4);
+		Card card_seven = new Card(2,1);
+		
+		comm_cards[0] = card_three;
+		comm_cards[1] = card_four;
+		comm_cards[2] = card_five;
+		comm_cards[3] = card_six;
+		comm_cards[4] = card_seven;
+		
+		
+		int result = game.eval_factory.compare_hands(hand_one, hand_two, comm_cards);
+
+		assertEquals(2, result);
+	}
+	
+	@Test
+	void test_better_straight_flush() {
+		
+		Game game = new Game();
+		
+		Card [] hand_one = new Card[2];
+		Card [] hand_two = new Card[2];
+		Card [] comm_cards = new Card[5];
+		
+		Card card_one = new Card(5,1);
+		Card card_two = new Card(6,1);
+		
+		hand_one[0] = card_one;
+		hand_one[1] = card_two;
+
+		card_one = new Card(10,1);
+		card_two = new Card(11,1);
+		
+		hand_two[0] = card_one;
+		hand_two[1] = card_two;
+		
+		Card card_three = new Card(7,1);
+		Card card_four = new Card(8,1);
+		Card card_five = new Card(9,1);
+		Card card_six = new Card(3,2);
+		Card card_seven = new Card(2,2);
+		
+		comm_cards[0] = card_three;
+		comm_cards[1] = card_four;
+		comm_cards[2] = card_five;
+		comm_cards[3] = card_six;
+		comm_cards[4] = card_seven;
+		
+		
+		int result = game.eval_factory.compare_hands(hand_one, hand_two, comm_cards);
+
+		assertEquals(2, result);
+	}
+	
+	
 }

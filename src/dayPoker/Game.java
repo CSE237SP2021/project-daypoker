@@ -36,6 +36,8 @@ public class Game {
 	
 	public ArrayList<Player> players_in = new ArrayList<Player>();
 	
+	int games_to_play = 0;
+	
 	
 	
 	// ----------INSTATIATE OTHER CLASS OBJECTS FOR MAIN GAMEPLAY-------------- //
@@ -57,17 +59,13 @@ public class Game {
 	public static void main(String[] args) {
 	
 		
-		
-	    
 	   Game game = new Game();
 	    
 	   game.print_intro();
 	    
-	   // game.hand_test();
+	    game.game_init();
 	    
-	  //  game.game_init();
-	    
-	  //  game.game_loop(100);
+	    game.game_loop(game.games_to_play);
 	   
 	    
 	}
@@ -109,6 +107,12 @@ public class Game {
 		
 		System.out.println();
 		System.out.println();
+		
+		System.out.println("Welcome to dayPoker. How many hands of Texas Hold'em would you like to play?");
+		
+		String action = myObj.nextLine();
+		
+		games_to_play = Integer.parseInt(action.toString());
 			
 	}
 	
@@ -288,15 +292,51 @@ public class Game {
 		
 		if (result == Constants.fold_success) fold = true;
 		
-		player_one.chip_stack += main_pot.inPot;
-		
-		main_pot.inPot = 0;
-		
-		System.out.println("Player One, you have won the hand! The pot of " + main_pot.inPot + " chips has been pushed your way.");
+		manage_win();
 		
 		if (turn_order) players_in.remove(player_two);
 		
 		else players_in.remove(player_one);
+		
+	}
+	
+	public void manage_win() {
+		
+		System.out.println();
+		
+		System.out.println("Player One's hand: ");
+		
+		player_one.print_hand();
+		
+		System.out.println();
+		
+		System.out.println("Player Two's hand: ");
+		
+		player_two.print_hand();
+		
+		
+		int winner = eval_factory.compare_hands(player_one.cards, player_two.cards, maindeck.community_cards);
+		
+		if (winner == 1) {
+			System.out.println("Player One, you had the better hand! The pot of " + main_pot.inPot + " chips has been pushed your way.");
+			player_one.chip_stack += main_pot.inPot;
+			main_pot.inPot = 0;
+		}
+		
+		if (winner == 2) {
+			System.out.println("Player Two, you had the better hand! The pot of " + main_pot.inPot + " chips has been pushed your way.");
+			player_two.chip_stack += main_pot.inPot;
+			main_pot.inPot = 0;
+		}
+		
+		if (winner == 0) {
+			System.out.println("Looks like a chopped pot! You both will get half of what's in the middle (" + main_pot.inPot + ")");
+			player_one.chip_stack += main_pot.inPot/2;
+			player_two.chip_stack += main_pot.inPot/2;
+			main_pot.inPot = 0;
+		}
+		
+		
 		
 	}
 	
