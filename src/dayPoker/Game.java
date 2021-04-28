@@ -1,6 +1,7 @@
 package dayPoker;
 import java.util.Scanner; 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Game {
 	
@@ -44,18 +45,58 @@ public class Game {
 	
 	public ShowFigures figure_printer = new ShowFigures();
 	
+	public HandEval eval_factory = new HandEval(maindeck);
+	
 	
 	
 	public static void main(String[] args) {
 	
+		
+		
 	    
 	    Game game = new Game();
 	    
+	    game.hand_test();
+	    
 	    game.game_init();
 	    
-	    game.game_loop(100);
+	  //  game.game_loop(100);
 	   
 	    
+	}
+	
+	
+	public void hand_test() {
+		
+		maindeck.shuffle_deck();
+		
+		
+		for (int i = 0; i < 2; ++i) {
+			player_one.cards[i] = maindeck.deal_cards();
+			System.out.println(player_one.cards[i].rank);
+			player_two.cards[i] = maindeck.deal_cards();
+		}
+	
+		
+		for (int i = 0; i < 5; ++i) {
+			maindeck.community_cards[i] = maindeck.deal_cards();
+			System.out.println(maindeck.community_cards[i].rank);
+		}
+		
+		Card [] first_hand = new Card[7];
+		
+		for (int i = 0; i < 5; ++ i) {
+    		first_hand[i] = maindeck.community_cards[i];
+    	}
+    	
+    	for (int i = 5; i < 7; ++ i) {
+    		first_hand[i] = player_one.cards[i - 5];
+    	}
+    	
+    	Arrays.sort(first_hand);
+    	
+		eval_factory.eval_chain(first_hand);
+		
 	}
 	
 	public void game_init() {

@@ -1,6 +1,6 @@
 package dayPoker;
 
-public class Card {
+public class Card implements Comparable<Card> {
 
 	
 	 // VARIABLES TO REPRESENT CARD SUITS
@@ -32,4 +32,11 @@ public class Card {
 	 this.suit = cardsuit;
 	 
 	 }
+
+
+	@Override
+	public int compareTo(Card o) {
+		// TODO Auto-generated method stub
+		return this.rank - o.rank;
+	}
 }
